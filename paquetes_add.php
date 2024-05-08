@@ -28,7 +28,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php include("sidebar.html"); ?>
+        <?php include("sidebar.php"); ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -39,7 +39,7 @@
 
                 <!-- Topbar -->
 
-                <?php include("toolbar.html"); ?>
+                <?php include("toolbar.php"); ?>
 
                 <!-- End of Topbar -->
 
@@ -64,22 +64,22 @@
 
                                         <div class="form-row row">
                                             <div class="col-md-12">
-                                                <label id="nombre_remitente_nombre" for="">Nombre</label>
-                                                <input readonly type="text" placeholder="Nombre" id="nombre_remitente" class="form-control">
+                                                <label for="">Nombre</label>
+                                                <input readonly type="text" placeholder="Nombre" id="nombre_remitente" name='nombre_remitente' class="form-control">
                                             </div>
                                         </div>
 
                                         <div class="form-row row">
                                             <div class="col-md-12">
-                                                <label id="direccion_remitente_nombre" for="">Direccion</label>
-                                                <input readonly type="text" placeholder="direccion_remitente" id="direccion_remitente" class="form-control">
+                                                <label for="">Direccion</label>
+                                                <input readonly type="text" placeholder="Direccion" id="direccion_remitente" name='direccion_remitente' class="form-control">
                                             </div>
                                         </div>
 
                                         <div class="form-row row">
                                             <div class="col-md-12">
-                                                <label id="numero_remitente_nombre" for="">Numero</label>
-                                                <input readonly type="text" placeholder="numero_remitente" id="numero_remitente" class="form-control">
+                                                <label for="">Numero</label>
+                                                <input readonly type="text" placeholder="Numero" id="numero_remitente" name='numero_remitente' class="form-control">
                                             </div>
                                         </div>
                                         <br>
@@ -108,28 +108,42 @@
                                 <div class="form-row row">
                                     <div class="col-md-12">
                                         <label for="">Nombre</label>
-                                        <input readonly type="text" placeholder="Nombre" class="form-control">
+                                        <input readonly type="text" placeholder="Nombre" name='nombre_consignnario' class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="form-row row">
                                     <div class="col-md-12">
                                         <label for="">Direccion</label>
-                                        <input readonly type="text" placeholder="Direccion" class="form-control">
+                                        <input readonly type="text" placeholder="Direccion" name='direccion_consignnario' class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="form-row row">
                                     <div class="col-md-12">
                                         <label for="">Numero</label>
-                                        <input readonly type="text" placeholder="Numero" class="form-control">
+                                        <input readonly type="text" placeholder="Numero" name='numero_consignnario' class="form-control">
                                     </div>
                                 </div>
 
+
                                 <div class="form-row row">
                                     <div class="col-md-12">
-                                        <a class="btn btn-info" name="Check_1" id="Check_1">Check</a>
+                                        <label for="">Seleccione la sucursal de destino</label>
 
+                                        <select class="form-control" name="sucursal_destino" id="sucursal_destino">
+                                            <option value="CONAVENCA MARACAIBO">CONAVENCA MARACAIBO</option>
+                                            <option value="CONAVENCA CARACAS">CONAVENCA CARACAS</option>
+                                            <option value="CONAVENCA VALENCIA">CONAVENCA VALENCIA</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <br>
+
+                                <div class="form-row row">
+                                    <div class="col-md-12">
+                                        <a class="btn btn-info" name="Check_2" id="Check_2">Check</a>
                                         <a class="btn btn-info" name="continuar_2" id="continuar_2">Continuar</a>
                                     </div>
                                 </div>
@@ -156,12 +170,67 @@
                                     <br>
                                     <div class="form-row row">
                                         <div class="col-md-12">
-                                            <button class="btn btn-primary w-100" id="Agregar" name="Agregar">Agregar</button>
+                                            <button class="btn btn-primary w-100" id="Confirm" name="Confirm">Confirmar</button>
                                             <input type="hidden" name="action" id="action">
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div id="confirmation_form" style="display: none;">
+                                <h1>Datos del remitente</h1>
+                                <table class="table caption-top">
+                                    <thead class="table-primary">
+                                        <tr>
+                                            <th scope="col">Cedula Remitente</th>
+                                            <th scope="col">Nombre Remitente</th>
+                                            <th scope="col">Direccion Remitente</th>
+                                            <th scope="col">Numero Remitente</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td id='cedula_remitente_confirm'></td>
+                                            <td id='nombre_remitente_confirm'></td>
+                                            <td id='dirrecion_remitente_confirm'></td>
+                                            <td id='numero_remitente_confirm'></td>
+                                </table>
+                                <h1>Datos del consignario</h1>
+                                <table class="table caption-top">
+                                    <thead class="table-primary">
+                                        <tr>
+                                            <th scope="col">Cedula consignario</th>
+                                            <th scope="col">Nombre consignario</th>
+                                            <th scope="col">Direccion consignario</th>
+                                            <th scope="col">Numero consignario</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td id='cedula_consignario_confirm'></td>
+                                            <td id='nombre_consignario_confirm'></td>
+                                            <td id='dirrecion_consignario_confirm'></td>
+                                            <td id='numero_consignario_confirm'></td>
+                                </table>
+                                <h1>Datos del Paquete</h1>
+                                <table id='confirm_paquete' class="table caption-top">
+                                    <thead class="table-primary">
+                                        <tr>
+                                            <th scope="col">Peso</th>
+                                            <th scope="col">Descripcion</th>
+                                            <th scope="col">Precio envio</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td id='peso_confirm'></td>
+                                            <td id='descripcion_confirm'></td>
+                                            <td id='precio_confirm'></td>
+                                </table>
+
+                                <button class="btn btn-primary w-100" id="Agregar" name="Agregar">Agregar</button>
+
+                            </div>
+
 
                             <div>
 
@@ -223,6 +292,20 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <script>
+        function agregarNombreATabla() {
+            // Obtener el valor del input
+            var peso = document.querySelector("#peso").value;
+            var descripcion = document.querySelector("#descripcion").value;
+
+            // Crear una fila y una celda
+            var fila = document.querySelector("#confirm_paquete").insertRow();
+
+            var celdaPeso = fila.insertCell(0);
+            celdaPeso.innerHTML = peso;
+
+            var celdaDescripcion = fila.insertCell(1);
+            celdaDescripcion.innerHTML = descripcion;
+        }
         /* REFRESCAR */
         /* window.addEventListener('beforeunload', function (e) {
           // Cancel the event
@@ -231,6 +314,8 @@
           e.returnValue = '';
         }); */
 
+        var Continuar_1 = document.querySelector("#continuar_1");
+        Continuar_1.disabled = "true";
 
 
         var Cedula_remitente_form = document.querySelector("#Cedula_remitente_form");
@@ -248,6 +333,7 @@
         $(document).ready(function() {
 
             $(document).on('click', '#Check_1', function() {
+
                 $('#action').val('Check');
                 var Cedula = $('#cedula_remitente').val();
                 var action = $('#action').val();
@@ -260,7 +346,13 @@
                             action: action
                         },
                         success: function(data) {
-                            alert(data);
+                            $('#cedula_remitente_confirm').text(data.cedula); // Agregar ID a la tabla
+                            $('#nombre_remitente_confirm').text(data.nombre);
+                            $('#dirrecion_remitente_confirm').text(data.correo);
+                            $('#numero_remitente_confirm').text(data.telefono);
+                            $('input[name="nombre_remitente"]').val(data.nombre);
+                            $('input[name="direccion_remitente"]').val(data.correo);
+                            $('input[name="numero_remitente"]').val(data.telefono);
                         }
                     })
 
@@ -311,7 +403,13 @@
                             action: action
                         },
                         success: function(data) {
-                            alert(data);
+                            $('#cedula_consignario_confirm').text(data.cedula); // Agregar ID a la tabla
+                            $('#nombre_consignario_confirm').text(data.nombre);
+                            $('#dirrecion_consignario_confirm').text(data.correo);
+                            $('#numero_consignario_confirm').text(data.telefono);
+                            $('input[name="nombre_consignnario"]').val(data.nombre);
+                            $('input[name="direccion_consignnario"]').val(data.correo);
+                            $('input[name="numero_consignnario"]').val(data.telefono);
                         }
                     })
 
@@ -348,6 +446,17 @@
                 }
 
             });
+            $(document).on('click', '#Confirm', function() {
+
+                    paquete_form.style.display = "none";
+
+
+                    $('#confirmation_form').show();
+                    agregarNombreATabla();
+
+                }
+
+            );
 
             $(document).on('click', '#Agregar', function() {
                 $('#action').val('paquete_agregar');

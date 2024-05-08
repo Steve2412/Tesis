@@ -1,3 +1,8 @@
+<?php
+include("php/session.php");
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +31,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php include("sidebar.html"); ?>
+        <?php include("sidebar.php"); ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -37,7 +42,7 @@
 
                 <!-- Topbar -->
 
-                <?php include("toolbar.html"); ?>
+                <?php include("toolbar.php"); ?>
 
                 <!-- End of Topbar -->
 
@@ -68,7 +73,7 @@
                         <div class="modal-body">Presiona "Salir" para cerrar tu sesion</div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                            <a class="btn btn-danger" href="login.html">Salir</a>
+                            <a class="btn btn-danger" href="php/logout.php">Salir</a>
                         </div>
                     </div>
                 </div>

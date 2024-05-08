@@ -1,3 +1,8 @@
+<?php
+include("php/session.php");
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,7 +30,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Sidebar -->
-        <?php include("sidebar.html"); ?>
+        <?php include("sidebar.php"); ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -36,7 +41,7 @@
 
                 <!-- Topbar -->
 
-                <?php include("toolbar.html"); ?>
+                <?php include("toolbar.php"); ?>
 
                 <!-- End of Topbar -->
 
@@ -57,7 +62,9 @@
                                                 <div class="mt-3">
                                                     <h4>John Doe</h4>
                                                     <p class="text-secondary mb-1">Cargo</p>
+                                                    <p class="text-secondary mb-1"><?php echo $cargo ?></p>
                                                     <p class="text-muted font-size-sm">Sucursal</p>
+                                                    <p class="text-muted font-size-sm"><?php echo $sucursal ?></p>
                                                     <button class="btn btn-primary">Ejemplo</button>
                                                 </div>
                                             </div>
@@ -72,7 +79,7 @@
                                                     <h6 class="mb-0">Nombre</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-secondary">
-                                                    <input type="text" class="form-control" value="John Doe">
+                                                    <input type="text" readonly class="form-control" value="<?php echo $Nombre ?>">
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -80,7 +87,7 @@
                                                     <h6 class="mb-0">Correo</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-secondary">
-                                                    <input type="text" class="form-control" value="john@example.com">
+                                                    <input type="text" readonly class="form-control" value="<?php echo $correo ?>">
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -88,7 +95,7 @@
                                                     <h6 class="mb-0">Telefono</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-secondary">
-                                                    <input type="text" class="form-control" value="(239) 816-9029">
+                                                    <input type="text" readonly class="form-control" value="<?php echo $telefono ?>">
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -96,13 +103,13 @@
                                                     <h6 class="mb-0">Direccion</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-secondary">
-                                                    <input type="text" class="form-control" value="Bay Area, San Francisco, CA">
+                                                    <input type="text" readonly class="form-control" value="<?php echo $direccion ?>">
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-3"></div>
                                                 <div class="col-sm-9 text-secondary">
-                                                    <input type="button" class="btn btn-primary px-4" value="Guardar cambios">
+                                                    <input type="button" readonly class="btn btn-primary px-4" value="Guardar cambios">
                                                 </div>
                                             </div>
                                         </div>

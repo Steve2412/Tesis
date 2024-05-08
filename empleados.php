@@ -35,7 +35,7 @@ $total = $conectar->query($query)->rowCount()
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php include("sidebar.html"); ?>
+        <?php include("sidebar.php"); ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -46,7 +46,7 @@ $total = $conectar->query($query)->rowCount()
 
                 <!-- Topbar -->
 
-                <?php include("toolbar.html"); ?>
+                <?php include("toolbar.php"); ?>
 
                 <!-- End of Topbar -->
 
@@ -57,7 +57,7 @@ $total = $conectar->query($query)->rowCount()
                     <div id="navbar-params" class="">
                         <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                             <div class="input-group">
-                                <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar Empleado" aria-label="Search" aria-describedby="basic-addon2">
+                                <input name="busc_empleado" id="busc_empleado" type="text" class="form-control bg-light border-0 small" placeholder="Buscar Empleado" aria-label="Search" aria-describedby="basic-addon2">
                                 <div class="input-group-append">
                                     <button class="btn btn-primary" type="button">
                                         <i class="fas fa-search fa-sm"></i>
@@ -105,6 +105,8 @@ $total = $conectar->query($query)->rowCount()
                         </div>
                         <div id="table_empleados" class="shadow p-3">
                         </div>
+
+
                         <div id="more-actions">
 
                         </div>
@@ -161,15 +163,43 @@ $total = $conectar->query($query)->rowCount()
     $(document).ready(function() {
 
         load_list();
+        livesearch();
+
+        function livesearch() {
+            $(document).on("keyup", "#busc_empleado", function() {
+                var busc_empleado = $(this).val();
+                var action = "search_empleado";
+
+                if (busc_empleado != '') {
+                    $.ajax({
+                        url: "php/action.php",
+                        type: "POST",
+                        data: {
+                            action: action,
+                            busc_empleado: busc_empleado
+                        },
+                        success: function(data) {
+                            $('#table_empleados').html(data);
+                            load_list(page);
+                        }
+                    });
+                } else {
+                    load_list();
+                }
+
+            })
+        }
 
         function load_list(page) {
             var action = "fetch_empleados";
+            var empleado = $('#busc_empleado').val();
             $.ajax({
                 url: "php/action.php",
                 type: "POST",
                 data: {
                     action: action,
-                    page: page
+                    page: page,
+                    empleado: empleado
                 },
                 success: function(data) {
                     $('#table_empleados').html(data);
@@ -182,6 +212,12 @@ $total = $conectar->query($query)->rowCount()
             load_list(page);
         });
     })
+
+    $("input").keydown(function(event) {
+        if (event.keyCode == 13) {
+            event.preventDefault();
+        }
+    });
 </script>
 
 </html>

@@ -1,3 +1,16 @@
+<?php
+require "php/conexion.php";
+$id = $_GET['verid'];
+$query = "SELECT * FROM paquetes WHERE package_id = '$id'";
+$result = $conectar->query($query)->fetchAll(PDO::FETCH_BOTH);
+foreach ($result as $row) {
+    $package_peso = $row['package_peso'];
+    $package_description = $row['package_description'];
+    $package_qr_code = $row['package_qr_code'];
+    $package_status = $row['package_status'];
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +39,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php include("sidebar.html"); ?>
+        <?php include("sidebar.php"); ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -37,7 +50,7 @@
 
                 <!-- Topbar -->
 
-                <?php include("toolbar.html"); ?>
+                <?php include("toolbar.php"); ?>
 
                 <!-- End of Topbar -->
 
@@ -47,43 +60,54 @@
                     <!-- Page Heading -->
 
 
-                    <div class="row">
-
+                    <div class="row2">
+                        <div class="col-auto mt-3">
+                            <i class="fas fa-arrow-left fa-2x text-secondary" role="button" aria-pressed="true" onclick="history.back()"></i>
+                        </div>
                         <div class="col-lg-8 shadow p-3">
-
                             <!-- Default Card Example -->
                             <div class="card mb-4" id="card-paquete">
                                 <div class="card-header">
                                     Informacion del paquete
                                 </div>
-                                <div class="card-body">
-                                    <p>Id</p>
-                                    <p>Sucursal</p>
-                                    <p>peso</p>
-                                    <p>description</p>
-                                    <p>Status</p>
-                                    <img src="QRcode.png" alt="">
+                                <div class="card-body text-center">
+                                    <p class="mb-3">Id</p>
+                                    <?php
+                                    echo $id;
+                                    ?>
+                                    <p class="mb-3">Sucursal</p>
+                                    <p class="mb-3">peso</p>
+                                    <?php
+                                    echo $package_peso;
+                                    ?>
+                                    <p class="mb-3">description</p>
+                                    <?php
+                                    echo $package_description;
+                                    ?>
+                                    <p class="mb-3">Status</p>
+                                    <?php
+                                    echo $package_status;
+                                    ?>
+                                    <br>
+                                    <img src="data:image/png;base64,<?php echo base64_encode($package_qr_code); ?>" alt="Código QR del paquete" class="mt-3">
                                 </div>
                             </div>
-
-
                         </div>
-
-
                     </div>
                 </div>
-                <div id="more-actions">
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generar Reporte</a>
-                    </div>
-
+            </div>
+            <div id="more-actions">
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generar Reporte</a>
                 </div>
 
             </div>
-            <!-- /.container-fluid -->
 
         </div>
-        <!-- End of Main Content -->
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
     </div>
     <!-- End of Content Wrapper -->
 

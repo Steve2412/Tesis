@@ -17,6 +17,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
 </head>
 
@@ -26,7 +27,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php include("sidebar.html"); ?>
+        <?php include("sidebar.php"); ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -37,7 +38,7 @@
 
                 <!-- Topbar -->
 
-                <?php include("toolbar.html"); ?>
+                <?php include("toolbar.php"); ?>
 
                 <!-- End of Topbar -->
 
@@ -48,7 +49,7 @@
                     <div id="navbar-params" class="">
                         <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                             <div class="input-group">
-                                <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar un paquete..." aria-label="Search" aria-describedby="basic-addon2">
+                                <input id="busc_paquete" name="busc_paquete" type="text" class="form-control bg-light border-0 small" placeholder="Buscar un paquete..." aria-label="Search" aria-describedby="basic-addon2">
                                 <div class="input-group-append">
                                     <button class="btn btn-primary" type="button">
                                         <i class="fas fa-search fa-sm"></i>
@@ -86,81 +87,13 @@
                             </div>
 
 
-
                         </div>
-                        <div id="table-packages" class="shadow p-3">
-                            <table class="table caption-top">
-                                <caption>Lista de Paquetes</caption>
-                                <thead class="table-primary">
-                                    <tr>
-                                        <th scope="col">Id</th>
-                                        <th scope="col">Sucursal</th>
-                                        <th scope="col">Peso</th>
-                                        <th scope="col">Precio</th>
-                                        <th scope="col">Descripcion</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">CodigoQR</th>
-                                        <th scope="col">mas detalles</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Maracaibo</td>
-                                        <td>16kg</td>
-                                        <td>20$</td>
-                                        <td>Productos de comida</td>
-                                        <td>En stock</td>
-                                        <td>QR</td>
-                                        <td><a href="">mas detalles</a></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Caracas</td>
-                                        <td>16kg</td>
-                                        <td>20$</td>
-                                        <td>Productos de comida</td>
-                                        <td>En stock</td>
-                                        <td>QR</td>
-                                        <td><a href="">mas detalles</a></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Falcon</td>
-                                        <td>16kg</td>
-                                        <td>20$</td>
-                                        <td>Productos de comida</td>
-                                        <td>En stock</td>
-                                        <td>QR</td>
-                                        <td><a href="">mas detalles</a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
+                        <div id="table_paquetes" class="shadow p-3">
                         </div>
                         <div id="more-actions">
                             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                                 <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generar Reporte</a>
                             </div>
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                            <span class="sr-only">Next</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
 
                         </div>
 
@@ -210,5 +143,64 @@
         <script src="js/sb-admin-2.min.js"></script>
 
 </body>
+
+<script>
+    $(document).ready(function() {
+
+        load_list();
+        livesearch();
+
+        function livesearch() {
+            $(document).on("keyup", "#busc_paquete", function() {
+                var busc_paquete = $(this).val();
+                var action = "search_paquete";
+
+                if (busc_paquete != '') {
+                    $.ajax({
+                        url: "php/action.php",
+                        type: "POST",
+                        data: {
+                            action: action,
+                            busc_paquete: busc_paquete
+                        },
+                        success: function(data) {
+                            $('#table_paquetes').html(data);
+                            load_list(page);
+                        }
+                    });
+                } else {
+                    load_list();
+                }
+
+            })
+        }
+
+        function load_list(page) {
+            var action = "fetch_paquetes";
+            $.ajax({
+                url: "php/action.php",
+                type: "POST",
+                data: {
+                    action: action,
+                    page: page
+                },
+                success: function(data) {
+                    $('#table_paquetes').html(data);
+                }
+            });
+        }
+
+        $(document).on('click', '.pagination_link', function() {
+            var page = $(this).attr("id");
+            load_list(page);
+        });
+    })
+
+    $("input").keydown(function(event) {
+        if (event.keyCode == 13) {
+            event.preventDefault();
+        }
+    });
+</script>
 
 </html>
