@@ -36,13 +36,13 @@
                             </div>
                             <form class="user" action="./php/login.php" method="POST">
                                 <div class="form-group">
-                                    <input type="number" class="form-control form-control-user" id="Cedula_Login" name='Cedula_Login' placeholder="Cedula" name="cedula">
+                                    <input type="number" class="form-control form-control-user" id="Cedula_Login" name='Cedula_Login' placeholder="Cedula" name="cedula" value="30238697">
                                 </div>
                                 <div class="form-group row">
 
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control form-control-user" id="Contra_Login" name="Contra_Login" placeholder="Contraseña" name="clave">
+                                    <input type="password" class="form-control form-control-user" id="Contra_Login" name="Contra_Login" placeholder="Contraseña" name="clave" value="admin">
                                 </div>
                                 <input type="hidden" name="action" id="action">
                                 <input type="button" class="btn btn-primary btn-user btn-block" id="login_button" name="login_button" placeholder="" value="Ingresar" name="login">

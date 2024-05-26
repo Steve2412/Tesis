@@ -1,5 +1,7 @@
 <?php
 require "php/conexion.php";
+include("php/session.php");
+
 $id = $_GET['verid'];
 $query = "SELECT * FROM paquetes WHERE package_id = '$id'";
 $result = $conectar->query($query)->fetchAll(PDO::FETCH_BOTH);
@@ -8,7 +10,14 @@ foreach ($result as $row) {
     $package_description = $row['package_description'];
     $package_qr_code = $row['package_qr_code'];
     $package_status = $row['package_status'];
+    $package_sucursal_origen_id = $row['package_sucursal_origen_id'];
 }
+
+$query_2 = "SELECT * FROM sucursales WHERE id_sucursal = '$package_sucursal_origen_id'";
+$result_2 = $conectar->query($query_2)->fetchAll(PDO::FETCH_BOTH);
+foreach ($result_2 as $row_2) {
+    $nombre_sucursal_origen = $row_2['nombre_sucursal'];
+};
 
 ?>
 <!DOCTYPE html>
@@ -30,6 +39,7 @@ foreach ($result as $row) {
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
 </head>
 
@@ -71,24 +81,45 @@ foreach ($result as $row) {
                                     Informacion del paquete
                                 </div>
                                 <div class="card-body text-center">
-                                    <p class="mb-3">Id</p>
-                                    <?php
-                                    echo $id;
-                                    ?>
-                                    <p class="mb-3">Sucursal</p>
-                                    <p class="mb-3">peso</p>
-                                    <?php
-                                    echo $package_peso;
-                                    ?>
-                                    <p class="mb-3">description</p>
-                                    <?php
-                                    echo $package_description;
-                                    ?>
-                                    <p class="mb-3">Status</p>
-                                    <?php
-                                    echo $package_status;
-                                    ?>
-                                    <br>
+                                    <p class="mb-3">Id : <?php
+                                                            echo $id ?> </p>
+                                    <p class="mb-3">Sucursal Origen: <?php echo $package_sucursal_origen_id ?></p>
+                                    <p class="mb-3">Peso: <?php
+                                                            echo $package_peso; ?> kg</p>
+                                    <p class="mb-3">Descripcion: <?php
+                                                                    echo $package_description;
+                                                                    ?></p>
+
+                                    <p class="mb-3">Estatus: <?php
+                                                                switch ($package_status) {
+                                                                    case 1:
+                                                                        $package_status = "En sucursal origen";
+                                                                        break;
+                                                                    case 2:
+                                                                        $package_status = "En camino";
+                                                                        break;
+                                                                    case 3:
+                                                                        $package_status = "En sucursal destino";
+                                                                        break;
+                                                                    case 4:
+                                                                        $package_status = "Entregado al cliente ";
+                                                                    case 5:
+                                                                        $package_status = "Cancelado";
+                                                                        break;
+                                                                }
+                                                                echo $package_status;
+                                                                ?></p>
+                                    <p class="mb-3">Pago del paquete: <?php
+                                                                        $query_3 = "SELECT * FROM pagos WHERE id_paquete = '$id'";
+                                                                        $result_3 = $conectar->query($query_3)->rowCount();
+                                                                        if ($result_3 > 0) {
+                                                                            echo '<a href="info_pago.php?id=' . $id . '">Ver pago</a>';
+                                                                        } else {
+                                                                            echo '<a href="notificar_pago.php?id=' . $id . '">Realizar pago</a>';;
+                                                                        }
+                                                                        ?></p>
+
+                                    <p>Codigo QR:</p>
                                     <img src="data:image/png;base64,<?php echo base64_encode($package_qr_code); ?>" alt="Código QR del paquete" class="mt-3">
                                 </div>
                             </div>
@@ -120,23 +151,7 @@ foreach ($result as $row) {
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Cierre de Sesion</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Presiona "Salir" para cerrar tu sesion</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-danger" href="login.html">Salir</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php include("logout.php"); ?>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>

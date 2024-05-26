@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 // Conectando a la base de datos usando PDO
 try {
@@ -9,7 +10,7 @@ try {
 }
 
 (int)$const = 1728;
-$get_height= $_POST['height'];
+$get_height = $_POST['height'];
 
 $get_width = (int)$_POST['width'];
 
@@ -37,11 +38,9 @@ if ($stmt->rowCount() > 0) {
     $fetch_data = $stmt->fetch(PDO::FETCH_ASSOC);
     $precio = $fetch_data['precio'];
     $total = $precio * $total_pc;
-    $total_round= round($total, 2); 
+    $total_round = round($total, 2);
     echo $total_round;
 } else {
     echo "¡Lo siento, no puedo ayudarte con este inconveniente! Favor comunícate con el administrador en el siguiente enlace:
     </br><a href='https://www.google.com.ve'>Contacto</a>";
 }
-
-?>

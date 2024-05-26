@@ -1,3 +1,8 @@
+<?php
+require "php/conexion.php";
+include("php/session.php");
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,11 +18,18 @@
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="http://ksylvest.github.io/jquery-growl/stylesheets/jquery.growl.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    </script>
+
+
 
 
 </head>
@@ -119,6 +131,7 @@
                                     </div>
                                 </div>
 
+
                                 <div class="form-row row">
                                     <div class="col-md-12">
                                         <label for="">Numero</label>
@@ -131,11 +144,24 @@
                                     <div class="col-md-12">
                                         <label for="">Seleccione la sucursal de destino</label>
 
-                                        <select class="form-control" name="sucursal_destino" id="sucursal_destino">
-                                            <option value="CONAVENCA MARACAIBO">CONAVENCA MARACAIBO</option>
-                                            <option value="CONAVENCA CARACAS">CONAVENCA CARACAS</option>
-                                            <option value="CONAVENCA VALENCIA">CONAVENCA VALENCIA</option>
-                                        </select>
+                                        <?php
+                                        $query = "SELECT id_sucursal, nombre_sucursal FROM sucursales";
+                                        $result = $conectar->query($query)->fetchAll(PDO::FETCH_BOTH);
+                                        echo '<select class="form-control" name="sucursal_destino" id="sucursal_destino">';
+                                        foreach ($result as $row) {
+                                            echo "<option value='" . $row["id_sucursal"] . "'>" . $row["nombre_sucursal"] . "</option>";
+                                        }
+
+
+                                        echo "</select>";
+                                        ?>
+
+                                    </div>
+
+                                    <div class="form-row row">
+                                        <div class="col-md-12">
+                                            <textarea name="sucursal_origen" id="sucursal_origen"><?php echo $sucursal ?> </textarea>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -156,7 +182,7 @@
                                     <div class="form-row row">
                                         <div class="col-md-12">
                                             <label for="">Peso</label>
-                                            <input oninput="this.value = this.value.replace(/[^0-9-]/g, '').replace(/(\..*?)\..*/g, '$1');" type="text" placeholder="Ingresa el Peso del producto" id="peso" class="form-control">
+                                            <input onkeyup="agregarDecimal_1()" type="text" placeholder="Ingresa el Peso del producto" id="peso" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-row row">
@@ -170,7 +196,7 @@
                                     <br>
                                     <div class="form-row row">
                                         <div class="col-md-12">
-                                            <button class="btn btn-primary w-100" id="Confirm" name="Confirm">Confirmar</button>
+                                            <button class="btn btn-primary w-100" id="continuar_3" name="continuar_3">Continuar</button>
                                             <input type="hidden" name="action" id="action">
                                         </div>
                                     </div>
@@ -217,17 +243,88 @@
                                         <tr>
                                             <th scope="col">Peso</th>
                                             <th scope="col">Descripcion</th>
-                                            <th scope="col">Precio envio</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td id='peso_confirm'></td>
                                             <td id='descripcion_confirm'></td>
-                                            <td id='precio_confirm'></td>
                                 </table>
+                                <button class="btn btn-primary w-100" id="Agregar" name="Agregar">Continuar</button>
 
-                                <button class="btn btn-primary w-100" id="Agregar" name="Agregar">Agregar</button>
+                            </div>
+
+                            <div id="pago_form">
+                                <div class="cf-cover">
+                                    <div class="session-title row">
+                                    </div>
+                                    <div class="form-row row">
+                                        <div class="col-md-12">
+                                            <label for="">Cargo del pago</label>
+                                            <select class="form-control" name="pago_efectuado" id="pago_efectuado">
+                                                <option style="display:none" value="0" selected="selected">Escoge una opcion</option>
+                                                <option value="1">Remitente</option>
+                                                <option value="2">Consignario</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div id="pago_form_2">
+                                        <div class="cf-cover">
+                                            <div class="session-title row">
+                                            </div>
+                                            <div class="form-row row">
+                                                <div class="form-row row">
+                                                    <div class="col-md-12">
+                                                        <label for="">Banco</label>
+                                                        <select class="form-control" name="banco" id="banco">
+                                                            <option value="Banco de Venezuela">Banco de Venezuela</option>
+                                                            <option value="Banesco">Banesco</option>
+                                                            <option value="Banco Provincial">Banco Provincial</option>
+                                                            <option value="Banco Nacional de Crédito">Banco Nacional de Crédito</option>
+                                                            <option value="Bancrecer">Bancrecer</option>
+                                                            <option value="Banco Mercantil">Banco Mercantil</option>
+                                                            <option value="Banco del Tesoro">Banco del Tesoro</option>
+                                                            <option value="Banco Exterior">Banco Exterior</option>
+                                                            <option value="Banco Bicentenario">Banco Bicentenario</option>
+                                                            <option value="Banco Venezolano de Crédito">Banco Venezolano de Crédito</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row row">
+                                                    <div class="col-md-12">
+                                                        <label for="">N° de Referencia</label>
+                                                        <input oninput="this.value = this.value.replace(/[^0-9-]/g, '').replace(/(\..*?)\..*/g, '$1');" type="text" placeholder="Ingresa numero de referencia" id="referencia" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row row">
+                                                    <div class="col-md-12">
+                                                        <label for="">Fecha Pago</label>
+                                                        <input type="date" id="fecha_pago" class="form-control" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-row row">
+                                                    <div class="col-md-12">
+                                                        <label for="">Monto</label>
+                                                        <input onkeyup="agregarDecimal_2()" type="text" placeholder="Ingresa la longitud del producto" id="monto" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row row">
+                                                    <div class="col-md-12">
+                                                        <label for="">Captura pago</label>
+                                                        <input type="file" id="captura" name="captura" accept="image/*">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row row agre">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-row row agre">
+                                    </div>
+                                </div> <button class="btn btn-primary w-100" id="Confirm" name="Confirm">Continuar</button>
 
                             </div>
 
@@ -257,29 +354,27 @@
     </div>
     <!-- End of Page Wrapper -->
 
+    <!-- Toast Container -->
+    <div class="toast-container top-0 start-0 p-4">
+        <div class="toast text-bg-primary border-0" id="toastAlert">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <strong id='text_toasts'></strong>
+                </div>
+                <button type="button" class="fa fa-window-close" onclick="cerrarToast()"></button>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Cierre de Sesion</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Presiona "Salir" para cerrar tu sesion</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-danger" href="login.html">Salir</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php include("logout.php"); ?>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -292,10 +387,56 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <script>
+        var peso = document.querySelector("#peso");
+
+        function agregarDecimal_1() {
+            var num = monto.value.replace(/\./g, '');
+            if (!isNaN(num)) {
+                num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{2})?/, '$1.');
+                num = num.split('').reverse().join('').replace(/^[\.]/, '');
+                peso.value = num;
+            } else {
+                alert('Solo se permiten números');
+                peso.value = peso.value.replace(/[^\d\.]*/g, '');
+            }
+        }
+
+        var monto = document.querySelector("#peso");
+
+        function agregarDecimal_2() {
+            var num = monto.value.replace(/\./g, '');
+            if (!isNaN(num)) {
+                num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{2})?/, '$1.');
+                num = num.split('').reverse().join('').replace(/^[\.]/, '');
+                monto.value = num;
+            } else {
+                alert('Solo se permiten números');
+                monto.value = monto.value.replace(/[^\d\.]*/g, '');
+            }
+        }
+
+        var Continuar_1 = document.querySelector("#continuar_1");
+        var Continuar_2 = document.querySelector("#continuar_2");
+        Continuar_1.disabled = true;
+        Continuar_2.disabled = true;
+
+
+        const toastAlert = document.getElementById('toastAlert');
+        const text_toasts = document.getElementById('text_toasts');
+        bootstrap.Toast.Default.delay = 2000
+
+        function cerrarToast() {
+            var toast = document.getElementById('toastAlert'); // Obtener el elemento del toast
+            var bootstrapToast = new bootstrap.Toast(toast); // Crear una instancia de Bootstrap Toast
+            bootstrapToast.hide(); // Ocultar el toast
+        }
+
         function agregarNombreATabla() {
             // Obtener el valor del input
-            var peso = document.querySelector("#peso").value;
+
+
             var descripcion = document.querySelector("#descripcion").value;
+            var peso = document.querySelector("#peso").value;
 
             // Crear una fila y una celda
             var fila = document.querySelector("#confirm_paquete").insertRow();
@@ -314,19 +455,34 @@
           e.returnValue = '';
         }); */
 
-        var Continuar_1 = document.querySelector("#continuar_1");
-        Continuar_1.disabled = "true";
 
 
         var Cedula_remitente_form = document.querySelector("#Cedula_remitente_form");
         var cedula_consignario_form = document.querySelector("#cedula_consignario_form");
         var paquete_form = document.querySelector("#paquete_form");
+        var pago_form = document.querySelector("#pago_form");
+        var pago_form_2 = document.querySelector("#pago_form_2");
+
 
         Cedula_remitente_form.style.display = "block";
         cedula_consignario_form.style.display = "none";
         paquete_form.style.display = "none";
+        pago_form.style.display = "none";
+        pago_form_2.style.display = "none";
 
 
+        document.getElementById('pago_efectuado').addEventListener('change', function() {
+            var selectValue = document.getElementById('pago_efectuado').value;
+
+            if (selectValue == '0') {
+                document.getElementById('Agregar').style.display = 'none';
+            }
+            if (selectValue == '2') {
+                document.getElementById('pago_form_2').style.display = 'none';
+            } else if (selectValue == '1') {
+                document.getElementById('pago_form_2').style.display = 'block';
+            }
+        });
 
 
 
@@ -346,18 +502,28 @@
                             action: action
                         },
                         success: function(data) {
-                            $('#cedula_remitente_confirm').text(data.cedula); // Agregar ID a la tabla
-                            $('#nombre_remitente_confirm').text(data.nombre);
-                            $('#dirrecion_remitente_confirm').text(data.correo);
-                            $('#numero_remitente_confirm').text(data.telefono);
-                            $('input[name="nombre_remitente"]').val(data.nombre);
-                            $('input[name="direccion_remitente"]').val(data.correo);
-                            $('input[name="numero_remitente"]').val(data.telefono);
+                            if (data == "No existe el usuario") {
+                                text_toasts.innerHTML = "Error! el usuario no existe en el sistema";
+                                const toast = new bootstrap.Toast(toastAlert);
+                                toast.show();
+                            } else {
+                                $('#cedula_remitente_confirm').text(data.cedula); // Agregar ID a la tabla
+                                $('#nombre_remitente_confirm').text(data.nombre);
+                                $('#dirrecion_remitente_confirm').text(data.correo);
+                                $('#numero_remitente_confirm').text(data.telefono);
+                                $('input[name="nombre_remitente"]').val(data.nombre);
+                                $('input[name="direccion_remitente"]').val(data.correo);
+                                $('input[name="numero_remitente"]').val(data.telefono);
+                                Continuar_1.disabled = false;
+
+                            }
                         }
                     })
 
                 } else {
-                    alert("Ingresa el dato solicitado");
+                    text_toasts.innerHTML = "Ingresa los datos solicitados";
+                    const toast = new bootstrap.Toast(toastAlert);
+                    toast.show();
                 }
 
             });
@@ -385,7 +551,9 @@
                     })
 
                 } else {
-                    alert("Ingresa el dato solicitado");
+                    text_toasts.innerHTML = "Ingresa los datos solicitados";
+                    const toast = new bootstrap.Toast(toastAlert);
+                    toast.show();
                 }
 
             });
@@ -394,6 +562,7 @@
                 $('#action').val('Check');
                 var Cedula = $('#consignario').val();
                 var action = $('#action').val();
+
                 if (Cedula != '') {
                     $.ajax({
                         url: "php/action.php",
@@ -403,19 +572,29 @@
                             action: action
                         },
                         success: function(data) {
-                            $('#cedula_consignario_confirm').text(data.cedula); // Agregar ID a la tabla
-                            $('#nombre_consignario_confirm').text(data.nombre);
-                            $('#dirrecion_consignario_confirm').text(data.correo);
-                            $('#numero_consignario_confirm').text(data.telefono);
-                            $('input[name="nombre_consignnario"]').val(data.nombre);
-                            $('input[name="direccion_consignnario"]').val(data.correo);
-                            $('input[name="numero_consignnario"]').val(data.telefono);
+                            if (data == "No existe el usuario") {
+                                text_toasts.innerHTML = "Error! el usuario no existe en el sistema";
+                                const toast = new bootstrap.Toast(toastAlert);
+                                toast.show();
+                            } else {
+                                $('#cedula_consignario_confirm').text(data.cedula); // Agregar ID a la tabla
+                                $('#nombre_consignario_confirm').text(data.nombre);
+                                $('#dirrecion_consignario_confirm').text(data.correo);
+                                $('#numero_consignario_confirm').text(data.telefono);
+                                $('input[name="nombre_consignnario"]').val(data.nombre);
+                                $('input[name="direccion_consignnario"]').val(data.correo);
+                                $('input[name="numero_consignnario"]').val(data.telefono);
+                                Continuar_2.disabled = false;
+                            }
                         }
                     })
 
                 } else {
-                    alert("Ingresa el dato solicitado");
+                    text_toasts.innerHTML = "Ingresa los datos solicitados";
+                    const toast = new bootstrap.Toast(toastAlert);
+                    toast.show();
                 }
+
 
             });
 
@@ -423,49 +602,136 @@
                 $('#action').val('Continuar');
                 var Cedula = $('#consignario').val();
                 var action = $('#action').val();
-                if (Cedula != '') {
-                    $.ajax({
-                        url: "php/action.php",
-                        type: "POST",
-                        data: {
-                            Cedula: Cedula,
-                            action: action
-                        },
-                        success: function(data) {
-                            if (data == "Continuar") {
-                                cedula_consignario_form.style.display = "none";
-                                paquete_form.style.display = 'block';
-                            } else if (data == "No existe el usuario") {
-                                alert(data);
-                            }
-                        }
-                    })
-
+                var Cedula_1 = $('#cedula_remitente').val();
+                if (Cedula_1 == Cedula) {
+                    text_toasts.innerHTML = "Error! el usuario no puede ser el mismo que el remitente";
+                    const toast = new bootstrap.Toast(toastAlert);
+                    toast.show();
+                    Continuar_2.disabled = true;
                 } else {
-                    alert("Ingresa el dato solicitado");
+
+                    if (Cedula != '') {
+                        $.ajax({
+                            url: "php/action.php",
+                            type: "POST",
+                            data: {
+                                Cedula: Cedula,
+                                action: action
+                            },
+                            success: function(data) {
+                                if (data == "Continuar") {
+                                    cedula_consignario_form.style.display = "none";
+                                    paquete_form.style.display = "block";
+
+                                } else if (data == "No existe el usuario") {
+                                    alert(data);
+                                }
+                            }
+                        })
+
+                    } else {
+                        text_toasts.innerHTML = "Ingresa los datos solicitados";
+                        const toast = new bootstrap.Toast(toastAlert);
+                        toast.show();
+                    }
                 }
 
             });
             $(document).on('click', '#Confirm', function() {
 
-                    paquete_form.style.display = "none";
+                    var Pago_efecutado = $('#pago_efectuado').val();
+                    if (Pago_efecutado == 1) {
 
+                        var Banco = $('#banco').val();
+                        var Referencia = $('#referencia').val();
+                        var Fecha_pago = $('#fecha_pago').val();
+                        var Monto = $('#monto').val();
+                        var Captura = $('#captura').val();
 
-                    $('#confirmation_form').show();
-                    agregarNombreATabla();
+                        if (Banco != '' && Referencia != '' && Fecha_pago != '' && Monto != '' && Captura != '') {
+                            pago_form.style.display = "none";
+                            pago_form_2.style.display = "none";
 
+                            $('#confirmation_form').show();
+                            agregarNombreATabla();
+
+                        } else {
+                            text_toasts.innerHTML = "Ingresa los datos solicitados";
+                            const toast = new bootstrap.Toast(toastAlert);
+                            toast.show();
+                        }
+                    } else if (Pago_efecutado == 2) {
+                        pago_form.style.display = "none";
+                        pago_form_2.style.display = "none";
+                        $('#confirmation_form').show();
+                        agregarNombreATabla();
+                    } else {
+                        text_toasts.innerHTML = "Selecciona alguna de las opciones";
+                        const toast = new bootstrap.Toast(toastAlert);
+                        toast.show();
+                    }
                 }
 
             );
 
+            $(document).on('click', '#continuar_3', function() {
+                var peso = $('#peso').val();
+                var descripcion = $('#descripcion').val();
+                if (peso != '' || descripcion != '') {
+                    paquete_form.style.display = "none";
+                    pago_form.style.display = "block";
+                } else {
+                    text_toasts.innerHTML = "Ingresa los datos solicitados";
+                    const toast = new bootstrap.Toast(toastAlert);
+                    toast.show();
+                }
+
+
+
+            });
+
             $(document).on('click', '#Agregar', function() {
-                $('#action').val('paquete_agregar');
-                var Cedula_1 = $('#cedula_remitente').val();
-                var Cedula_2 = $('#consignario').val();
-                var Peso = $('#peso').val();
-                var Desc = $('#descripcion').val();
-                var action = $('#action').val();
-                if (Peso != '' || Desc != '') {
+                var Pago_efecutado = $('#pago_efectuado').val();
+                if (Pago_efecutado == 1) {
+                    $('#action').val('paquete_agregar_1');
+                    var formData = new FormData();
+                    formData.append('Cedula_1', $('#cedula_remitente').val());
+                    formData.append('Cedula_2', $('#consignario').val());
+                    formData.append('Peso', $('#peso').val());
+                    formData.append('Desc', $('#descripcion').val());
+                    formData.append('Sucursal_Origen', $('#sucursal_origen').val());
+                    formData.append('Sucursal_Destino', $('#sucursal_destino').val());
+                    formData.append('Banco', $('#banco').val());
+                    formData.append('Referencia', $('#referencia').val());
+                    formData.append('Fecha_pago', $('#fecha_pago').val());
+                    formData.append('Monto', $('#monto').val());
+                    formData.append('Captura', $('#captura')[0].files[0]);
+                    formData.append('action', 'paquete_agregar_1');
+
+                    $.ajax({
+                        url: "php/action.php",
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(data) {
+                            text_toasts.innerHTML = "Se ingresaron todos los datos al sistema correctamente";
+                            const toast = new bootstrap.Toast(toastAlert);
+                            toast.show();
+                        }
+                    })
+
+                } else if (Pago_efecutado == 2) {
+                    $('#action').val('paquete_agregar_2');
+                    var Cedula_1 = $('#cedula_remitente').val();
+                    var Cedula_2 = $('#consignario').val();
+                    var Peso = $('#peso').val();
+                    var Desc = $('#descripcion').val();
+                    var Sucursal_Origen = $('#sucursal_origen').val();
+                    var Sucursal_Destino = $('#sucursal_destino').val();
+
+                    var action = $('#action').val();
+
                     $.ajax({
                         url: "php/action.php",
                         type: "POST",
@@ -474,16 +740,20 @@
                             Cedula_2: Cedula_2,
                             Peso: Peso,
                             Desc: Desc,
+                            Sucursal_Origen: Sucursal_Origen,
+                            Sucursal_Destino: Sucursal_Destino,
                             action: action
                         },
                         success: function(data) {
-                            alert(data);
+                            text_toasts.innerHTML = "Se ingresaron todos los datos al sistema correctamente";
+                            const toast = new bootstrap.Toast(toastAlert);
+                            toast.show();
                         }
                     })
 
-                } else {
-                    alert("Ingresa el dato solicitado");
+
                 }
+
 
             });
 

@@ -64,10 +64,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="sucursal"
-                                            placeholder="Sucursal" name="sucursal">
-                                    </div>
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-user" id="direccion"
                                             placeholder="Direccion" name="direccion">
@@ -75,10 +71,20 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="sucursal">Sucursal</label>
+                                        <select class="form-control" placeholder="Sucursal" name="sucursal"
+                                            id="sucursal">
+                                            <option value="1">Caracas</option>
+                                            <option value="2">Maracaibo</option>
+                                            <option value="3">Valencia</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
                                         <label for="cargo">Cargo</label>
                                         <select class="form-control" placeholder="Cargo" name="cargo" id="cargo">
                                             <option value="Admin">Admin</option>
                                             <option value="Empleado">Empleado</option>
+                                            <option value="Transportista">Transportista</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6">
@@ -131,7 +137,20 @@
 </body>
 
 <script>
+    // Función para ocultar o mostrar el campo de contraseña según la selección en el select
+    function togglePasswordInput() {
+        var selectElement = document.querySelector("#cargo"); document.getElementById('cargo'); // Reemplaza 'selectElement' con el ID de tu <select>
+        var passwordInput = document.getElementById('contra'); // Reemplaza 'passwordInput' con el ID de tu campo de contraseña
 
+        if (selectElement.value === 'Transportista') { // Reemplaza 'opcion_seleccionada' con el valor que debe ocultar el campo de contraseña
+            passwordInput.style.display = 'none'; // Oculta el campo de contraseña
+        } else {
+            passwordInput.style.display = 'block'; // Muestra el campo de contraseña
+        }
+    }
+
+    // Agregar un event listener para el evento change en el select
+    document.getElementById('selectElement').addEventListener('change', togglePasswordInput); // Reemplaza 'selectElement' con el ID de tu <select>
 
     $(document).ready(function () {
 
@@ -150,7 +169,7 @@
 
 
             var action = $('#action').val();
-            if (nombre != '' && apellido != '' && cedula != '' && email != '' && sucursal != '' && direccion != '' && sexo != '' && cargo != '' && contra != '') {
+            if (nombre != '' && apellido != '' && cedula != '' && email != '' && sucursal != '' && direccion != '' && sexo != '' && cargo != '') {
                 $.ajax(
                     {
                         url: "php/action.php",

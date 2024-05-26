@@ -312,15 +312,4 @@ $html = '
 
 </html>
 ';
-try {
-
-    $dompdf = new Dompdf();
-
-    $dompdf->loadHtml($html, 'UTF-8');
-
-    $dompdf->render();
-
-    $dompdf->stream('Prueba', array("Attachment" => false));
-} catch (Exception $e) {
-    echo "Error al generar el PDF: " . $e->getMessage();
-}
+echo $html;

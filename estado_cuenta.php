@@ -1,9 +1,11 @@
-<?php
+<?php session_start();
 include 'php/conexion.php';
 include("php/session.php");
 
-$query = "SELECT * FROM paquetes";
+
+$query = "SELECT * FROM pagos";
 $total = $conectar->query($query)->rowCount()
+
 
 ?>
 <!DOCTYPE html>
@@ -17,7 +19,7 @@ $total = $conectar->query($query)->rowCount()
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>CONAVENCA - Paquetes</title>
+    <title>SB Admin 2 - Blank</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -25,6 +27,8 @@ $total = $conectar->query($query)->rowCount()
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
 
 </head>
 
@@ -36,6 +40,7 @@ $total = $conectar->query($query)->rowCount()
         <!-- Sidebar -->
         <?php include("sidebar.php"); ?>
         <!-- End of Sidebar -->
+
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -55,8 +60,8 @@ $total = $conectar->query($query)->rowCount()
                     <!-- Page Heading -->
                     <div id="navbar-params" class="">
                         <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <div class="input-group">
-                                <input id="busc_paquete" name="busc_paquete" type="text" class="form-control bg-light border-0 small" placeholder="Buscar un paquete..." aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group border border-black">
+                                <input id="busc_pagos" name="busc_pagos" type="text" class="form-control bg-light border-0 small" placeholder="Buscar Pagos" aria-label="Search" aria-describedby="basic-addon2">
                                 <div class="input-group-append">
                                     <button class="btn btn-primary" type="button">
                                         <i class="fas fa-search fa-sm"></i>
@@ -64,25 +69,19 @@ $total = $conectar->query($query)->rowCount()
                                 </div>
                             </div>
                         </form>
-                        <div id="buttons">
-                            <a href="paquetes_add.php" id="btn-add" class="btn btn-primary" type="button">Agregar paquete</a>
-
-
-                        </div>
 
 
                     </div>
                     <div id="fila" class="">
                         <div class="row">
 
-                            <!-- Earnings (Monthly) Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card border-left-primary shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    Paquetes en stock</div>
+                                                    Clientes registrados</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $total ?></div>
                                             </div>
                                             <div class="col-auto">
@@ -91,47 +90,46 @@ $total = $conectar->query($query)->rowCount()
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> <a href="php/reportes/clientes.php"><i class="fa fa-file" style="font-size:30px;color:red"></i></button>
+                            </a>
 
 
                         </div>
-                        <div id="table_paquetes" class="shadow p-3">
-                        </div>
-                        <div id="more-actions">
-                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generar Reporte</a>
-                            </div>
-
-                        </div>
-
                     </div>
-                    <!-- /.container-fluid -->
+                    <div id="table_pagos" class="shadow p-3">
+                    </div>
+                    <div id="more-actions">
+                    </div>
 
                 </div>
-                <!-- End of Main Content -->
+                <!-- /.container-fluid -->
+
             </div>
-            <!-- End of Content Wrapper -->
-
+            <!-- End of Main Content -->
         </div>
-        <!-- End of Page Wrapper -->
+        <!-- End of Content Wrapper -->
 
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
+    </div>
+    <!-- End of Page Wrapper -->
 
-        <!-- Logout Modal-->
-        <?php include("logout.php"); ?>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Logout Modal-->
+    <?php include("logout.php"); ?>
 
-        <!-- Core plugin JavaScript-->
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-        <!-- Custom scripts for all pages-->
-        <script src="js/sb-admin-2.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
 
 </body>
 
@@ -142,20 +140,20 @@ $total = $conectar->query($query)->rowCount()
         livesearch();
 
         function livesearch() {
-            $(document).on("keyup", "#busc_paquete", function() {
-                var busc_paquete = $(this).val();
-                var action = "search_paquete";
+            $(document).on("keyup", "#busc_pagos", function() {
+                var busc_pagos = $(this).val();
+                var action = "search_pago";
 
-                if (busc_paquete != '') {
+                if (busc_pagos != '') {
                     $.ajax({
                         url: "php/action.php",
                         type: "POST",
                         data: {
                             action: action,
-                            busc_paquete: busc_paquete
+                            busc_pagos: busc_pagos
                         },
                         success: function(data) {
-                            $('#table_paquetes').html(data);
+                            $('#table_pagos').html(data);
                             load_list(page);
                         }
                     });
@@ -167,7 +165,7 @@ $total = $conectar->query($query)->rowCount()
         }
 
         function load_list(page) {
-            var action = "fetch_paquetes";
+            var action = "fetch_pagos";
             $.ajax({
                 url: "php/action.php",
                 type: "POST",
@@ -176,7 +174,7 @@ $total = $conectar->query($query)->rowCount()
                     page: page
                 },
                 success: function(data) {
-                    $('#table_paquetes').html(data);
+                    $('#table_pagos').html(data);
                 }
             });
         }

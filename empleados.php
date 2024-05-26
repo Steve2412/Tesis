@@ -1,5 +1,7 @@
 <?php
 include 'php/conexion.php';
+include("php/session.php");
+
 
 $query = "SELECT * FROM empleados";
 $total = $conectar->query($query)->rowCount()
@@ -69,7 +71,7 @@ $total = $conectar->query($query)->rowCount()
                             <a href="registrar_empleado.html">
                                 <button id="btn-add" class="btn btn-primary" type="button">Registrar Empleado</button>
                             </a>
-                            <a href="#" class="btn btn-danger" type="button">Reporte</button>
+                            <a href="php/reportes/empleados.php" class="btn btn-danger" type="button">Reporte</button>
                             </a>
 
 
@@ -128,23 +130,8 @@ $total = $conectar->query($query)->rowCount()
         </a>
 
         <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Cierre de Sesion</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Presiona "Salir" para cerrar tu sesion</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                        <a class="btn btn-danger" href="login.html">Salir</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php include("logout.php"); ?>
+
 
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
