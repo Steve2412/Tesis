@@ -3,7 +3,7 @@ include 'php/conexion.php';
 include("php/session.php");
 
 
-$query = "SELECT * FROM clientes";
+$query = "SELECT * FROM dispositivos where isActive = 0";
 $total = $conectar->query($query)->rowCount()
 
 
@@ -29,7 +29,6 @@ $total = $conectar->query($query)->rowCount()
     <link href="css/sb-admin-2.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
-
 </head>
 
 <body id="page-top">
@@ -40,7 +39,6 @@ $total = $conectar->query($query)->rowCount()
         <!-- Sidebar -->
         <?php include("sidebar.php"); ?>
         <!-- End of Sidebar -->
-
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -60,34 +58,32 @@ $total = $conectar->query($query)->rowCount()
                     <!-- Page Heading -->
                     <div id="navbar-params" class="">
                         <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <div class="input-group border border-black">
-                                <input id="busc_cliente" name="busc_cliente" type="text" class="form-control bg-light border-0 small" placeholder="Buscar Cliente" aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group">
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button">
-                                        <i class="fas fa-search fa-sm"></i>
-                                    </button>
                                 </div>
                             </div>
                         </form>
+
                         <div id="buttons">
-                            <a href="registrar_cliente.html">
-                                <button id="btn-add"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                            <a href="add_gps.php">
+                                <button id="btn-add" class="btn btn-primary" type="button">Registrar Dispositivo</button>
                             </a>
                         </div>
-
-
                     </div>
                     <div id="fila" class="">
                         <div class="row">
 
+                            <!-- Earnings (Monthly) Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card border-left-primary shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    Clientes registrados</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $total ?></div>
+                                                    Dispotivos disponibles</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                    <?php echo $total ?>
+                                                </div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -95,47 +91,51 @@ $total = $conectar->query($query)->rowCount()
                                         </div>
                                     </div>
                                 </div>
-                            </div> <a href="php/reportes/clientes.php"><i class="fa fa-file" style="font-size:30px;color:red"></i></button>
-                            </a>
+                            </div>
+
 
 
                         </div>
+                        <div id="table_gps" class="shadow p-3">
+                        </div>
+
+
+                        <div id="more-actions">
+
+                        </div>
+
                     </div>
-                    <div id="table_clientes" class="shadow p-3">
-                    </div>
-                    <div id="more-actions">
-                    </div>
+                    <!-- /.container-fluid -->
 
                 </div>
-                <!-- /.container-fluid -->
-
+                <!-- End of Main Content -->
             </div>
-            <!-- End of Main Content -->
+            <!-- End of Content Wrapper -->
+
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- End of Page Wrapper -->
 
-    </div>
-    <!-- End of Page Wrapper -->
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+        <!-- Logout Modal-->
+        <?php include("logout.php"); ?>
 
-    <!-- Logout Modal-->
-    <?php include("logout.php"); ?>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
 
 </body>
+
 
 <script>
     $(document).ready(function() {
@@ -144,20 +144,20 @@ $total = $conectar->query($query)->rowCount()
         livesearch();
 
         function livesearch() {
-            $(document).on("keyup", "#busc_cliente", function() {
-                var busc_cliente = $(this).val();
-                var action = "search_cliente";
+            $(document).on("keyup", "#busc_empleado", function() {
+                var busc_empleado = $(this).val();
+                var action = "search_empleado";
 
-                if (busc_cliente != '' || busc_cliente == "\u0027") {
+                if (busc_empleado != '') {
                     $.ajax({
                         url: "php/action.php",
                         type: "POST",
                         data: {
                             action: action,
-                            busc_cliente: busc_cliente
+                            busc_empleado: busc_empleado
                         },
                         success: function(data) {
-                            $('#table_clientes').html(data);
+                            $('#table_empleados').html(data);
                             load_list(page);
                         }
                     });
@@ -169,16 +169,16 @@ $total = $conectar->query($query)->rowCount()
         }
 
         function load_list(page) {
-            var action = "fetch_clientes";
+            var action = "fetch_gps";
             $.ajax({
                 url: "php/action.php",
                 type: "POST",
                 data: {
                     action: action,
-                    page: page
+                    page: page,
                 },
                 success: function(data) {
-                    $('#table_clientes').html(data);
+                    $('#table_gps').html(data);
                 }
             });
         }

@@ -2,14 +2,20 @@
 require "php/conexion.php";
 include("php/session.php");
 
-$id = $_GET['verid'];
-$query = "SELECT * FROM paquetes WHERE package_id = '$id'";
+$verid = $_GET['verid'];
+$query = "SELECT * FROM paquetes WHERE package_id = '$verid'";
 $result = $conectar->query($query)->fetchAll(PDO::FETCH_BOTH);
 foreach ($result as $row) {
     $package_peso = $row['package_peso'];
     $package_description = $row['package_description'];
     $package_qr_code = $row['package_qr_code'];
     $package_status = $row['package_status'];
+}
+$query_ultimo_registro = "SELECT status_pac FROM `paquetes_historial` WHERE id_pac = '$verid' ORDER BY id DESC
+LIMIT 1";
+$result_2 = $conectar->query($query_ultimo_registro)->fetchAll(PDO::FETCH_BOTH);
+foreach ($result_2 as $row) {
+    $ultimo_registro = $row['status_pac'];
 }
 
 ?>
@@ -62,14 +68,59 @@ foreach ($result as $row) {
 
                 </div>
                 <div id="fila" class="">
+                    <!-- Botón para abrir modal para cambiar estatus del paquete -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#estatusModal">Cambiar estatus</button>
+
+                    <!-- Modal para cambiar estatus del paquete -->
+                    <div class="modal fade" id="estatusModal" tabindex="-1" role="dialog" aria-labelledby="estatusModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="estatusModalLabel">Cambiar estatus del paquete</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="estatusForm">
+                                        <div class="form-group">
+                                            <label for="estatus">Estatus del paquete</label>
+                                            <?php
+                                            echo '<select class="form-control" id="siguienteEstatus" name="siguienteEstatus">';
+                                            if ($ultimo_registro  == 1) {
+                                                echo '<option value="2">En camino</option>';
+                                                echo '<option value="3">En entrega</option>';
+                                                echo '<option value="4">Devuelto</option>';
+                                            } elseif ($ultimo_registro  == 2) {
+                                                echo '<option value="3">En entrega</option>';
+                                                echo '<option value="4">Devuelto</option>';
+                                            } elseif ($ultimo_registro  == 3) {
+                                                echo '<option value="4">Devuelto</option>';
+                                            }
+                                            echo '</select>';
+                                            ?>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-primary" id="saveEstatus">Actualizar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
 
 
                     </div>
-                    <h1>Historial del paquete <?php echo $id ?></h1>
-                    <input type="hidden" id="id_pac_hist" name='id_pac_hist' type="text" readonly class="form-control" value="<?php echo $id ?>">
+                    <h1>Historial del paquete <?php echo $verid ?></h1>
+                    <input type="hidden" id="id_pac_hist" name='id_pac_hist' type="text" readonly class="form-control" value="<?php echo $verid ?>">
                     <div id="table_historial_paquetes" class="shadow p-3">
                     </div>
+
+                    <textarea name="empleado_id" id="empleado_id"><?php echo $id ?></textarea>
+
+
 
                 </div>
                 <!-- /.container-fluid -->
@@ -125,6 +176,27 @@ foreach ($result as $row) {
                 }
             });
         }
+        $('#saveEstatus').on('click', function(event) {
+            var Status = $('#estatus').val();
+            var paquete = $('#id_pac_hist').val();
+            var empleado = $('#empleado_id').val();
+            var action = "update_status";
+            $.ajax({
+                type: 'POST',
+                url: 'php/action.php',
+                data: {
+                    action: action,
+                    Status: Status,
+                    paquete: paquete,
+                    empleado: empleado
+                },
+                success: function(data) {
+                    alert(data);
+                    $('#estatusModal').modal('hide');
+                    load_list();
+                }
+            });
+        });
 
 
     });

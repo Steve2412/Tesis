@@ -137,20 +137,22 @@
 </body>
 
 <script>
-    // Función para ocultar o mostrar el campo de contraseña según la selección en el select
-    function togglePasswordInput() {
-        var selectElement = document.querySelector("#cargo"); document.getElementById('cargo'); // Reemplaza 'selectElement' con el ID de tu <select>
-        var passwordInput = document.getElementById('contra'); // Reemplaza 'passwordInput' con el ID de tu campo de contraseña
+    function hidePassword() {
+        const selectElement = document.getElementById('cargo');
+        const passwordElement = document.getElementById('contra');
 
-        if (selectElement.value === 'Transportista') { // Reemplaza 'opcion_seleccionada' con el valor que debe ocultar el campo de contraseña
-            passwordInput.style.display = 'none'; // Oculta el campo de contraseña
+        const selectedValue = selectElement.value;
+
+        if (selectedValue === 'Transportista') {
+            passwordElement.style.display = 'none';
         } else {
-            passwordInput.style.display = 'block'; // Muestra el campo de contraseña
+            passwordElement.style.display = 'block';
         }
     }
 
-    // Agregar un event listener para el evento change en el select
-    document.getElementById('selectElement').addEventListener('change', togglePasswordInput); // Reemplaza 'selectElement' con el ID de tu <select>
+    // Attach the event listener to the select element
+    const selectElement = document.getElementById('cargo');
+    selectElement.addEventListener('change', hidePassword);
 
     $(document).ready(function () {
 

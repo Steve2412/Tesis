@@ -1,4 +1,4 @@
-<?php session_start();
+<?php
 include 'php/conexion.php';
 include("php/session.php");
 
@@ -70,9 +70,50 @@ $total = $conectar->query($query)->rowCount()
                             </div>
                         </form>
                         <div id="buttons">
-                            <a href="registrar_cliente.html">
-                                <button id="btn-add" class="btn btn-primary" type="button">Registrar Problema</button>
-                            </a>
+                            <button id="btn-add" class="btn btn-primary" type="button" data-toggle="modal" data-target="#problemModal">
+                                Registrar Problema
+                            </button>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="problemModal" tabindex="-1" role="dialog" aria-labelledby="problemModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <form id="problemForm">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="problemModalLabel">Registrar Problema</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="Cedula" class="col-form-label">Nombre del Cliente:</label>
+                                                <input type="text" class="form-control" id="Cedula">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Paquete" class="col-form-label">ID del paquete</label>
+                                                <input type="text" class="form-control" id="Paquete">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Descripcion" class="col-form-label">Descripción del Problema:</label>
+                                                <textarea class="form-control" id="Descripcion"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Problema" class="col-form-label">Tipo de Problema:</label>
+                                                <select class="form-control" id="Problema">
+                                                    <option value="extravio">Extravio</option>
+                                                    <option value="dañado">Dañado</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary">Registrar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
 
 
@@ -192,6 +233,45 @@ $total = $conectar->query($query)->rowCount()
     $("input").keydown(function(event) {
         if (event.keyCode == 13) {
             event.preventDefault();
+        }
+    });
+    $('#btn-add').click(function() {
+        $('#problemModal').modal('show');
+    });
+
+    // Submit form data via AJAX
+    $('#problemForm').submit(function(e) {
+        e.preventDefault();
+        $('#action').val('registrar_problema');
+        var Cedula = $('#Cedula').val();
+        var Descripcion = $('#Descripcion').val();
+        var Problema = $('#Problema').val();
+        var Paquete = $('#Paquete').val();
+        if (Cedula != '' && Descripcion != '' && Problema != '', Paquete != '') {
+            $.ajax({
+                type: 'POST',
+                url: 'php/action.php',
+                data: {
+                    action: 'registrar_problema',
+                    Cedula: Cedula,
+                    Paquete: Paquete,
+                    Descripcion: Descripcion,
+                    Problema: Problema
+                },
+
+                success: function(response) {
+                    // Handle success response
+                    console.log(response);
+                    // Show success message or redirect to another page
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Handle error response
+                    console.log(textStatus, errorThrown);
+                    // Show error message
+                }
+            });
+        } else {
+            alert("Por favor llene todos los campos");
         }
     });
 </script>

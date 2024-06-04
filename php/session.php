@@ -15,4 +15,5 @@ foreach ($result as $row) {
     $telefono = $row['telefono'];
     $cargo = $row['cargo'];
     $sucursal = $row['sucursal'];
+    $id = $row['id_empleado'];
 }

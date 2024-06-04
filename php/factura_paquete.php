@@ -24,7 +24,7 @@ foreach ($result_2 as $row_2) {
 }
 
 $query_3 = "SELECT * FROM clientes WHERE cedula = '$package_consignatario_id'";
-$result_3 = $conectar->query($query_2)->fetchAll(PDO::FETCH_BOTH);
+$result_3 = $conectar->query($query_3)->fetchAll(PDO::FETCH_BOTH);
 foreach ($result_3 as $row_3) {
     $nombre_consignatario = $row_3['nombre'];
     $apellido_consignatario = $row_3['apellido'];
@@ -289,8 +289,7 @@ $html = '
                             <div class="form">
                                 <div class="form1">
                                     <h4>Firma:</h4><br>
-                                    <h4>Nombre/Apellido:</h4><br>
-                                    <h4>Fecha:</h4>
+                                    <h4>Fecha: ' . date("Y/m/d") . '</h4>
                                 </div>
                                 <div class="form2">
                                     <h4>Dia:_________Mes:__________Año:__________</h4>

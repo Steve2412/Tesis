@@ -145,12 +145,13 @@ include("php/session.php");
                                         <label for="">Seleccione la sucursal de destino</label>
 
                                         <?php
-                                        $query = "SELECT id_sucursal, nombre_sucursal FROM sucursales";
+                                        $query = "SELECT id_sucursal, nombre_sucursal FROM sucursales WHERE id_sucursal != '$sucursal'";
                                         $result = $conectar->query($query)->fetchAll(PDO::FETCH_BOTH);
                                         echo '<select class="form-control" name="sucursal_destino" id="sucursal_destino">';
                                         foreach ($result as $row) {
                                             echo "<option value='" . $row["id_sucursal"] . "'>" . $row["nombre_sucursal"] . "</option>";
                                         }
+
 
 
                                         echo "</select>";
@@ -161,6 +162,8 @@ include("php/session.php");
                                     <div class="form-row row">
                                         <div class="col-md-12">
                                             <textarea name="sucursal_origen" id="sucursal_origen"><?php echo $sucursal ?> </textarea>
+                                            <textarea name="id_empleado" id="id_empleado"><?php echo $id ?> </textarea>
+
                                         </div>
                                     </div>
 
@@ -699,6 +702,7 @@ include("php/session.php");
                     formData.append('Cedula_2', $('#consignario').val());
                     formData.append('Peso', $('#peso').val());
                     formData.append('Desc', $('#descripcion').val());
+                    formData.append('Id_empleado', $('#id_empleado').val());
                     formData.append('Sucursal_Origen', $('#sucursal_origen').val());
                     formData.append('Sucursal_Destino', $('#sucursal_destino').val());
                     formData.append('Banco', $('#banco').val());
@@ -725,6 +729,7 @@ include("php/session.php");
                     $('#action').val('paquete_agregar_2');
                     var Cedula_1 = $('#cedula_remitente').val();
                     var Cedula_2 = $('#consignario').val();
+                    var Id_empleado = $('#id_empleado').val();
                     var Peso = $('#peso').val();
                     var Desc = $('#descripcion').val();
                     var Sucursal_Origen = $('#sucursal_origen').val();
@@ -740,6 +745,7 @@ include("php/session.php");
                             Cedula_2: Cedula_2,
                             Peso: Peso,
                             Desc: Desc,
+                            Id_empleado: Id_empleado,
                             Sucursal_Origen: Sucursal_Origen,
                             Sucursal_Destino: Sucursal_Destino,
                             action: action

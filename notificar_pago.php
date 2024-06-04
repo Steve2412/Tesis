@@ -2,6 +2,8 @@
 require "php/conexion.php";
 include("php/session.php");
 
+$id = $_GET['id'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +24,7 @@ include("php/session.php");
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.css" rel="stylesheet">
     <link href="css/sb-admin-2.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -116,6 +119,9 @@ include("php/session.php");
                                                     <input type="file" id="captura" name="captura" accept="image/*">
                                                 </div>
                                             </div>
+                                            <div class="form-row row">
+                                                <textarea name="id_paquete" id="id_paquete"><?php echo $id ?></textarea>
+                                            </div>
                                         </div>
 
                                         <div class="form-row row agre">
@@ -125,7 +131,7 @@ include("php/session.php");
                                 </div>
                                 <div class="form-row row agre">
                                 </div>
-                            </div> <button class="btn btn-primary w-100" id="Confirm" name="Confirm">Continuar</button>
+                            </div> <a class="btn btn-primary w-100" id="Reportar_Pago" name="Reportar_Pago">Reportar Pago</a>
 
                         </div>
 
@@ -170,7 +176,48 @@ include("php/session.php");
 
     <!-- Logout Modal-->
     <?php include("logout.php"); ?>
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '#Reportar_Pago', function() {
+                var formData = new FormData();
+                formData.append('Banco', $('#banco').val());
+                formData.append('Referencia', $('#referencia').val());
+                formData.append('Fecha_pago', $('#fecha_pago').val());
+                formData.append('Monto', $('#monto').val());
+                formData.append('Captura', $('#captura')[0].files[0]);
+                formData.append('id_paquete', $('#id_paquete').val());
+                formData.append('action', 'Reportar_P');
+                if ($('#banco').val() != "" && $('#referencia').val() != "" && $('#fecha_pago').val() != "" && $('#monto').val() != "" && $('#captura').val() != "") {
+                    $.ajax({
+                        url: "php/action.php",
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(data) {
+                            alert("Se actualizaron los datos")
+                            window.location.href = "paquetes.php";
+                        }
+                    })
+
+                } else {
+                    alert("Por favor, rellene todos los campos")
+                }
+            });
+        });
+    </script>
 </body>
+
+
 
 </html>
