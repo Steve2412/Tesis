@@ -30,7 +30,7 @@ foreach ($result_2 as $row) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>CONAVENCA - Paquetes</title>
+    <title>CONAVENCA - Historial <?php echo $verid ?></title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -118,7 +118,7 @@ foreach ($result_2 as $row) {
                     <div id="table_historial_paquetes" class="shadow p-3">
                     </div>
 
-                    <textarea name="empleado_id" id="empleado_id"><?php echo $id ?></textarea>
+                    <textarea hidden name="empleado_id" id="empleado_id"><?php echo $id ?></textarea>
 
 
 

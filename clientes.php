@@ -19,7 +19,7 @@ $total = $conectar->query($query)->rowCount()
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Blank</title>
+    <title>Conavenca - Clientes</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -90,7 +90,7 @@ $total = $conectar->query($query)->rowCount()
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $total ?></div>
                                             </div>
                                             <div class="col-auto">
-                                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                                <i class="fas fa-user fa-2x text-gray-300"></i>
                                             </div>
                                         </div>
                                     </div>

@@ -11,10 +11,9 @@ include("php/session.php");
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">clientes_editar copy
     <meta name="author" content="">
 
-    <title>CONAVENCA ADMIN</title>
+    <title>Conavenca añadir dispositivo</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -68,9 +67,9 @@ include("php/session.php");
                                             </div>
                                         </div>
                                         <div class="row mb-3">
-                                                <div class="col-sm-12 text-center">
-                                                    <button type="button" id="add_gps" class="btn btn-primary">Registrar Dispositivo</button>
-                                                </div>
+                                            <div class="col-sm-12 text-center">
+                                                <button type="button" id="add_gps" class="btn btn-primary">Registrar Dispositivo</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

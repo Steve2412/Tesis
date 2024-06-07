@@ -31,7 +31,7 @@ foreach ($result_2 as $row_2) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Document</title>
+    <title>Conavenca - Info Paquete</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -83,7 +83,7 @@ foreach ($result_2 as $row_2) {
                                 <div class="card-body text-center">
                                     <p class="mb-3">Id : <?php
                                                             echo $id ?> </p>
-                                    <p class="mb-3">Sucursal Origen: <?php echo $package_sucursal_origen_id ?></p>
+                                    <p class="mb-3">Sucursal Origen: <?php echo $nombre_sucursal_origen ?></p>
                                     <p class="mb-3">Peso: <?php
                                                             echo $package_peso; ?> kg</p>
                                     <p class="mb-3">Descripcion: <?php

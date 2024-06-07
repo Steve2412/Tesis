@@ -77,7 +77,7 @@ foreach ($result as $row) {
                                 <div class="card-body text-center">
                                     <p class="mb-3">Numero de referencia: <?php echo $numero_referencia ?></p>
                                     <p class="mb-3">Monto: <?php
-                                                            echo $monto; ?> kg</p>
+                                                            echo $monto; ?> $</p>
                                     <p class="mb-3">Banco: <?php
                                                             echo $banco;
                                                             ?></p>

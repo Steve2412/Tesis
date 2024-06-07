@@ -47,7 +47,7 @@ if (isset($_POST["action"])) {
     if ($_POST["action"] == 'fetch_empleados') {
         $output = '
         <table class="table caption-top">
-        <caption>Lista de Usuarios</caption>
+        <caption>Lista de empleados</caption>
         <thead class="table-primary">
             <tr>
                 <th scope="col">Id</th>
@@ -130,7 +130,7 @@ if (isset($_POST["action"])) {
         $busc_empleado = $_POST["busc_empleado"];
         $output = '
         <table class="table caption-top">
-        <caption>Lista de Usuarios</caption>
+        <caption>Lista de empleados</caption>
         <thead class="table-primary">
             <tr>
                 <th scope="col">Id</th>
@@ -185,7 +185,7 @@ if (isset($_POST["action"])) {
     if ($_POST["action"] == 'fetch_clientes') {
         $output = '
         <table class="table caption-top">
-        <caption>Lista de Usuarios</caption>
+        <caption>Lista de clientes</caption>
         <thead class="table-primary">
             <tr>
                 <th scope="col">Id</th>
@@ -267,7 +267,7 @@ if (isset($_POST["action"])) {
         $busc_cliente = $_POST["busc_cliente"];
         $output = '
         <table class="table caption-top">
-        <caption>Lista de Usuarios</caption>
+        <caption>Lista de clientes</caption>
         <thead class="table-primary">
             <tr>
             <th scope="col">Id</th>
@@ -396,7 +396,7 @@ if (isset($_POST["action"])) {
         $busc_paquete = $_POST["busc_paquete"];
         $output = '
         <table class="table caption-top">
-        <caption>Lista de Usuarios</caption>
+        <caption>Lista de paquetes</caption>
         <thead class="table-primary">
             <tr>
                 <th scope="col">Id</th>
@@ -511,7 +511,7 @@ if (isset($_POST["action"])) {
     if ($_POST["action"] == 'fetch_pagos') {
         $output = '
         <table class="table caption-top">
-        <caption>Lista de Usuarios</caption>
+        <caption>Lista de pagos</caption>
         <thead class="table-primary">
             <tr>
                 <th scope="col">Id</th>
@@ -583,7 +583,7 @@ if (isset($_POST["action"])) {
         $busc_pagos = $_POST["busc_pagos"];
         $output = '
         <table class="table caption-top">
-        <caption>Lista de Usuarios</caption>
+        <caption>Lista de pagos</caption>
         <thead class="table-primary">
             <tr>
                 <th scope="col">Id</th>

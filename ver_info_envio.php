@@ -22,10 +22,9 @@ foreach ($result as $row) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">clientes_editar copy
     <meta name="author" content="">
 
-    <title>CONAVENCA ADMIN</title>
+    <title>Conavenca - Info de envio</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -98,11 +97,12 @@ foreach ($result as $row) {
                                             <div class="row"><br>
                                                 <p id="mensaje" style="margin-left: 30px; margin-top: 30px"></p>
                                             </div>
-                                        </div><hr>
+                                        </div>
+                                        <hr>
                                         <div class="row mb-3">
-                                                <div class="col-sm-12 text-center">
-                                                    <button type="button" id="fin_envio" class="btn btn-primary">Finalizar envio</button>
-                                                </div>
+                                            <div class="col-sm-12 text-center">
+                                                <button type="button" id="fin_envio" class="btn btn-primary">Finalizar envio</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div><br>
@@ -225,11 +225,11 @@ foreach ($result as $row) {
     });
 </script>
 <script>
-$(document).ready(function() {
-    $('#fin_envio').on('click', function() {
-        var action = "fin_envio_gps";
-        var gps_id = <?php echo json_encode($id); ?>; // Get GPS ID from PHP
-        $.ajax({
+    $(document).ready(function() {
+        $('#fin_envio').on('click', function() {
+            var action = "fin_envio_gps";
+            var gps_id = <?php echo json_encode($id); ?>; // Get GPS ID from PHP
+            $.ajax({
                 url: "php/action.php",
                 type: "POST",
                 data: {
@@ -238,15 +238,15 @@ $(document).ready(function() {
                 },
                 success: function(data) {
                     alert("Envio finalizado con exito");
-                    location.href ="active_gps.php";
+                    location.href = "active_gps.php";
                 },
                 error: function(xhr, status, error) {
                     console.error(xhr.responseText);
                     alert("Error: " + error);
                 }
             });
+        });
     });
-});
 </script>
 <script>
     $(document).ready(function() {

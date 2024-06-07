@@ -16,7 +16,7 @@ $id = $_GET['id'];
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Blank</title>
+    <title>Conavenca - notificar pago</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -62,8 +62,7 @@ $id = $_GET['id'];
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 mx-auto cf-container">
-                            <h2>Hola</h2>
-                            <p>Por favor, ingrese los datos solicitados a continuacion para poder añadir el paquete</p>
+                            <h2>Notifica el pago del paquete <?php echo $id ?></h2>
                             <div>
                                 <form>
 
@@ -109,8 +108,8 @@ $id = $_GET['id'];
                                             </div>
                                             <div class="form-row row">
                                                 <div class="col-md-12">
-                                                    <label for="">Monto</label>
-                                                    <input onkeyup="agregarDecimal_2()" type="text" placeholder="Ingresa la longitud del producto" id="monto" class="form-control">
+                                                    <label for="">Monto (En dolares)</label>
+                                                    <input onkeyup="agregarDecimal_2()" type="text" placeholder="20.00 $" id="monto" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="form-row row">
@@ -120,7 +119,7 @@ $id = $_GET['id'];
                                                 </div>
                                             </div>
                                             <div class="form-row row">
-                                                <textarea name="id_paquete" id="id_paquete"><?php echo $id ?></textarea>
+                                                <textarea hidden name="id_paquete" id="id_paquete"><?php echo $id ?></textarea>
                                             </div>
                                         </div>
 

@@ -86,7 +86,7 @@ $total = $conectar->query($query)->rowCount()
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $total ?></div>
                                             </div>
                                             <div class="col-auto">
-                                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                                <i class="fas fa-box fa-2x text-gray-300"></i>
                                             </div>
                                         </div>
                                     </div>

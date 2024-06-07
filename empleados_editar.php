@@ -22,10 +22,9 @@ foreach ($result as $row) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">clientes_editar copy
     <meta name="author" content="">
 
-    <title>Document</title>
+    <title>Editar Empleado <?php echo $Nombre ?></title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -69,7 +68,7 @@ foreach ($result as $row) {
                             <div class="col-lg-8">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h1>Editar datos de los clientes</h1>
+                                        <h1>Editar datos del empleado <?php echo $Nombre ?></h1>
 
                                         <div class="row mb-3">
                                             <div class="col-sm-3">

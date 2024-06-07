@@ -32,6 +32,7 @@
 		$_SESSION['error'] = 'Rellena todos los datos primero';
 	}
 
-	header('location:index.php');
+		header('location:../../../restaurar.php');
+
 
 ?>

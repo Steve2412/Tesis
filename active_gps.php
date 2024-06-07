@@ -16,10 +16,9 @@ $total = $conectar->query($query)->rowCount()
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Blank</title>
+    <title>Conavenca - Envios</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -80,7 +79,7 @@ $total = $conectar->query($query)->rowCount()
                                                 </div>
                                             </div>
                                             <div class="col-auto">
-                                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                                <i class="fas fa-map fa-2x text-gray-300"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -188,8 +187,6 @@ $total = $conectar->query($query)->rowCount()
             event.preventDefault();
         }
     });
-
-
 </script>
 
 </html>

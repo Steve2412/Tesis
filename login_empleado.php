@@ -49,9 +49,6 @@
                                 <hr>
                             </form>
                             <hr>
-                            <div class="text-center">
-                                <a class="small" href="forgot-password.html">Olvido su contraseña?</a>
-                            </div>
                         </div>
                     </div>
                 </div>
