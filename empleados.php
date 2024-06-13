@@ -69,9 +69,9 @@ $total = $conectar->query($query)->rowCount()
                         </form>
                         <div id="buttons">
                             <a href="registrar_empleado.html">
-                                <button id="btn-add" class="btn btn-primary" type="button">Registrar Empleado</button>
+                                <button id="btn-add"><i class="fa fa-plus" aria-hidden="true"></i></button>
                             </a>
-                            <a href="php/reportes/empleados.php" class="btn btn-danger" type="button">Reporte</button>
+                            <a href="php/reportes/empleados.php"><i class="fa fa-file ml-3" style="font-size:30px;color:red"></i></button>
                             </a>
 
 

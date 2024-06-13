@@ -230,6 +230,7 @@ foreach ($result as $row) {
                 success: function(data) {
                     if (data == "Success") {
                         alert("Paquetes agregados con éxito");
+                        location.reload()
                         load_list(); // Reload list if necessary
                     } else {
                         alert("Error al agregar paquetes");

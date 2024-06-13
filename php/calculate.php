@@ -26,8 +26,8 @@ $get_destination = $_POST['destination'];
 
 (int)$total_pc = $volume / $const;
 
-$check_distance = "SELECT precio FROM calc_sucursales WHERE remitente_1 LIKE '%$get_origin%' AND destinatario_1 LIKE '%$get_destination%'
-                                                     OR remitente_2 LIKE '%$get_destination%' AND destinatario_2 LIKE '%$get_origin%'";
+$check_distance = "SELECT precio FROM calc_sucursales WHERE remitente_1 LIKE '$get_origin' AND destinatario_1 LIKE '$get_destination'
+                                                     OR remitente_2 LIKE '$get_destination' AND destinatario_2 LIKE '$get_origin'";
 
 $stmt = $db->prepare($check_distance);
 $stmt->bindParam(':get_origin', $get_origin, PDO::PARAM_STR);
@@ -41,6 +41,5 @@ if ($stmt->rowCount() > 0) {
     $total_round = round($total, 2);
     echo $total_round;
 } else {
-    echo "¡Lo siento, no puedo ayudarte con este inconveniente! Favor comunícate con el administrador en el siguiente enlace:
-    </br><a href='https://www.google.com.ve'>Contacto</a>";
+    echo "error";
 }

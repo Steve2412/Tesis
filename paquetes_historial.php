@@ -72,6 +72,9 @@ foreach ($result_2 as $row) {
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#estatusModal">Cambiar estatus</button>
 
                     <!-- Modal para cambiar estatus del paquete -->
+                    <div class="col-auto mt-3">
+                        <i class="fas fa-arrow-left fa-2x text-secondary" role="button" aria-pressed="true" onclick="history.back()"></i>
+                    </div>
                     <div class="modal fade" id="estatusModal" tabindex="-1" role="dialog" aria-labelledby="estatusModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">

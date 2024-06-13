@@ -62,17 +62,22 @@ $id = $_GET['id'];
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 mx-auto cf-container">
+                            <div class="col-auto mt-3">
+                                <i class="fas fa-arrow-left fa-2x text-secondary" role="button" aria-pressed="true" onclick="history.back()"></i>
+                            </div>
                             <h2>Notifica el pago del paquete <?php echo $id ?></h2>
                             <div>
                                 <form>
 
 
                             </div>
+
                             <div id="cedula_consignario_form" class="cf-cover">
                                 <div class="session-title row">
                                 </div>
 
                                 <div id="pago_form_2">
+
                                     <div class="cf-cover">
                                         <div class="session-title row">
                                         </div>

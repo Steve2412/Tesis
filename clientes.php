@@ -73,7 +73,12 @@ $total = $conectar->query($query)->rowCount()
                             <a href="registrar_cliente.html">
                                 <button id="btn-add"><i class="fa fa-plus" aria-hidden="true"></i></button>
                             </a>
+
+                            <a href="php/reportes/clientes.php"><i class="fa fa-file ml-3" style="font-size:30px;color:red"></i></button>
+                            </a>
+
                         </div>
+
 
 
                     </div>
@@ -95,45 +100,44 @@ $total = $conectar->query($query)->rowCount()
                                         </div>
                                     </div>
                                 </div>
-                            </div> <a href="php/reportes/clientes.php"><i class="fa fa-file" style="font-size:30px;color:red"></i></button>
-                            </a>
+                                </a>
 
 
+                            </div>
                         </div>
+                        <div id="table_clientes" class="shadow p-3">
+                        </div>
+                        <div id="more-actions">
+                        </div>
+
                     </div>
-                    <div id="table_clientes" class="shadow p-3">
-                    </div>
-                    <div id="more-actions">
-                    </div>
+                    <!-- /.container-fluid -->
 
                 </div>
-                <!-- /.container-fluid -->
-
+                <!-- End of Main Content -->
             </div>
-            <!-- End of Main Content -->
+            <!-- End of Content Wrapper -->
+
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- End of Page Wrapper -->
 
-    </div>
-    <!-- End of Page Wrapper -->
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+        <!-- Logout Modal-->
+        <?php include("logout.php"); ?>
 
-    <!-- Logout Modal-->
-    <?php include("logout.php"); ?>
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
 
 </body>
 

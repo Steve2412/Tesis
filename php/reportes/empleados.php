@@ -36,7 +36,7 @@ $dompdf->loadHtml($html);
 $dompdf->render();
 
 // Envía el PDF al navegador
-$dompdf->stream("reporte_clientes.pdf");
+$dompdf->stream("reporte_clientes.pdf", array("Attachment" => false));
 
 $dompdf->setPaper('A4', 'landscape');
 

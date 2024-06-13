@@ -7,10 +7,14 @@ $id = $_GET['verid'];
 $query = "SELECT * FROM empleados WHERE id_empleado = '$id'";
 $result = $conectar->query($query)->fetchAll(PDO::FETCH_BOTH);
 foreach ($result as $row) {
+    $Cedula = $row['cedula'];
     $Nombre = $row['nombre'];
-    $correo = $row['correo'];
-    $telefono = $row['telefono'];
-    $direccion = $row['direccion'];
+    $Apellido = $row['apellido'];
+    $Correo = $row['correo'];
+    $Telefono = $row['telefono'];
+    $Sucursal = $row['sucursal'];
+    $Direccion = $row['direccion'];
+    $Sucursal = $row['sucursal'];
 }
 
 ?>
@@ -81,10 +85,26 @@ foreach ($result as $row) {
                                         </div>
                                         <div class="row mb-3">
                                             <div class="col-sm-3">
+                                                <h6 class="mb-0">Apellido</h6>
+                                            </div>
+                                            <div class="col-sm-9 text-secondary">
+                                                <input id="Apellido_cliente_editar" name='Apellido_cliente_editar' type="text" class="form-control" value="<?php echo $Apellido ?>">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-sm-3">
+                                                <h6 class="mb-0">Cedula</h6>
+                                            </div>
+                                            <div class="col-sm-9 text-secondary">
+                                                <input id="Cedula_cliente_editar" name='Cedula_cliente_editar' type="text" class="form-control" value="<?php echo $Cedula ?>">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-sm-3">
                                                 <h6 class="mb-0">Correo</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                <input id="Correo_cliente_editar" name='Correo_cliente_editar' type="text" class="form-control" value="<?php echo $correo ?>">
+                                                <input id="Correo_cliente_editar" name='Correo_cliente_editar' type="text" class="form-control" value="<?php echo $Correo ?>">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -92,7 +112,7 @@ foreach ($result as $row) {
                                                 <h6 class="mb-0">Telefono</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                <input id="Telefono_cliente_editar" name='Telefono_cliente_editar' type="text" class="form-control" value="<?php echo $telefono ?>">
+                                                <input id="Telefono_cliente_editar" name='Telefono_cliente_editar' type="text" class="form-control" value="<?php echo $Telefono ?>">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -100,7 +120,7 @@ foreach ($result as $row) {
                                                 <h6 class="mb-0">Direccion</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                                <input id="Direccion_cliente_editar" name='Direccion_cliente_editar' type="text" class="form-control" value="<?php echo $direccion ?>">
+                                                <input id="Direccion_cliente_editar" name='Direccion_cliente_editar' type="text" class="form-control" value="<?php echo $Direccion ?>">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -110,18 +130,28 @@ foreach ($result as $row) {
                                                 <a id="update_empleado" name="update_empleado" class="btn btn-primary px-4">Guardar cambios</a>
                                             </div>
                                         </div>
+                                        <!--<div class="form-group row">
+                                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                                <label for="sucursal">Sucursal</label>
+                                                <select class="form-control" placeholder="Sucursal" name="sucursal" id="sucursal">
+                                                    <option selected value="<?php echo $Sucursal ?>"><?php echo $Sucursal ?> </option>
+                                                    <option value="1">Caracas</option>
+                                                    <option value="2">Maracaibo</option>
+                                                    <option value="3">Valencia</option>
+                                                </select>
+                                            </div>
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                 </div>
-
-
             </div>
-        </div>
 
-    </div>
+        </div>
 
     </div>
     <!-- /.container-fluid -->
@@ -163,17 +193,21 @@ foreach ($result as $row) {
             $('#action').val('update_empleado');
             var id = $('#id').val();
             var Nombre_cliente_editar = $('#Nombre_cliente_editar').val();
+            var Apellido_cliente_editar = $('#Apellido_cliente_editar').val();
+            var Cedula_cliente_editar = $('#Cedula_cliente_editar').val();
             var Correo_cliente_editar = $('#Correo_cliente_editar').val();
             var Telefono_cliente_editar = $('#Telefono_cliente_editar').val();
             var Direccion_cliente_editar = $('#Direccion_cliente_editar').val();
             var action = $('#action').val();
-            if (Nombre_cliente_editar != '' && Correo_cliente_editar != '' && Telefono_cliente_editar != '' && Direccion_cliente_editar != '') {
+            if (Nombre_cliente_editar != '' && Apellido_cliente_editar != '' && Cedula_cliente_editar != '' && Correo_cliente_editar != '' && Telefono_cliente_editar != '' && Direccion_cliente_editar != '') {
                 $.ajax({
                     url: "php/action.php",
                     type: "POST",
                     data: {
                         id: id,
                         Nombre_cliente_editar: Nombre_cliente_editar,
+                        Apellido_cliente_editar: Apellido_cliente_editar,
+                        Cedula_cliente_editar: Cedula_cliente_editar,
                         Correo_cliente_editar: Correo_cliente_editar,
                         Telefono_cliente_editar: Telefono_cliente_editar,
                         Direccion_cliente_editar: Direccion_cliente_editar,

@@ -143,6 +143,7 @@ if (isset($_POST["action"])) {
                 <th scope="col">Telefono</th>
                 <th scope="col">Cargo</th>
                 <th scope="col">Sexo</th>
+                                <th scope="col">Editar</th>
             </tr>
             </thead>
 
@@ -164,6 +165,8 @@ if (isset($_POST["action"])) {
                     <td>' . $row['telefono'] . '</td>
                     <td>' . $row['cargo'] . '</td>
                     <td>' . $row['sexo'] . '</td>
+                                        <td> <a href="../empleados_editar.php?verid=' . $row['id_empleado'] . '"
+                    ><i class="fa fa-edit"></i></a> </td>
 
                 </tr>
                 
@@ -279,6 +282,8 @@ if (isset($_POST["action"])) {
             <th scope="col">Telefono</th>
             <th scope="col">Correo</th>
             <th scope="col">Sexo</th>
+            <th scope="col">Editar</th>
+
             </tr>
             </thead>
 
@@ -299,6 +304,8 @@ if (isset($_POST["action"])) {
                 <td>' . $row['telefono'] . '</td>
                 <td>' . $row['correo'] . '</td>
                 <td>' . $row['sexo'] . '</td>
+                <td> <a href="../clientes_editar.php?verid=' . $row['id'] . '"
+                    ><i class="fa fa-edit"></i></a> </td>
 
                 </tr>
                 
@@ -1002,11 +1009,13 @@ if (isset($_POST["action"])) {
 
         $id = $_POST["id"];
         $Nombre_cliente_editar = $_POST["Nombre_cliente_editar"];
+        $Apellido_cliente_editar = $_POST["apellido_cliente_editar"];
+        $Cedula_cliente_editar = $_POST["cedula_cliente_editar"];
         $Correo_cliente_editar = $_POST["Correo_cliente_editar"];
         $Telefono_cliente_editar = $_POST["Telefono_cliente_editar"];
         $Direccion_cliente_editar = $_POST["Direccion_cliente_editar"];
 
-        $pdo = $conectar->prepare("UPDATE clientes SET nombre = '$Nombre_cliente_editar',correo = '$Correo_cliente_editar',
+        $pdo = $conectar->prepare("UPDATE clientes SET nombre = '$Nombre_cliente_editar',apellido = '$Apellido_cliente_editar',cedula = '$Cedula_cliente_editar',correo = '$Correo_cliente_editar',
         telefono = '$Telefono_cliente_editar',direccion = '$Direccion_cliente_editar' WHERE id = '$id'");
         $pdo->execute();
 
@@ -1021,11 +1030,13 @@ if (isset($_POST["action"])) {
 
         $id = $_POST["id"];
         $Nombre_cliente_editar = $_POST["Nombre_cliente_editar"];
+        $Apellido_cliente_editar = $_POST["apellido_cliente_editar"];
+        $Cedula_cliente_editar = $_POST["cedula_cliente_editar"];
         $Correo_cliente_editar = $_POST["Correo_cliente_editar"];
         $Telefono_cliente_editar = $_POST["Telefono_cliente_editar"];
         $Direccion_cliente_editar = $_POST["Direccion_cliente_editar"];
 
-        $pdo = $conectar->prepare("UPDATE empleados SET nombre = '$Nombre_cliente_editar',correo = '$Correo_cliente_editar',
+        $pdo = $conectar->prepare("UPDATE empleados SET nombre = '$Nombre_cliente_editar',apellido = '$Apellido_cliente_editar',cedula = '$Cedula_cliente_editar' ,correo = '$Correo_cliente_editar',
         telefono = '$Telefono_cliente_editar',direccion = '$Direccion_cliente_editar' WHERE id_empleado = '$id'");
         $pdo->execute();
 

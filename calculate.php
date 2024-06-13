@@ -17,14 +17,12 @@ $get_destination = $_POST['destination'];
 
 (int)$total_pc = $volume / $const;
 
-$check_distance = "SELECT precio FROM calc_sucursales WHERE (remitente_1 LIKE ? AND destinatario_1 LIKE ?) 
-                                                    OR (remitente_2 LIKE ? AND destinatario_2 LIKE ?)";
+$check_distance = "SELECT precio FROM calc_sucursales WHERE remitente_1 = ? AND destinatario_1 = ? 
+                                                    OR remitente_2 = '$get_destination' AND destinatario_2 = '$get_origin'";
 
 $stmt = $conectar->prepare($check_distance);
-$stmt->bindValue(1, '%' . $get_origin . '%', PDO::PARAM_STR);
-$stmt->bindValue(2, '%' . $get_destination . '%', PDO::PARAM_STR);
-$stmt->bindValue(3, '%' . $get_destination . '%', PDO::PARAM_STR);
-$stmt->bindValue(4, '%' . $get_origin . '%', PDO::PARAM_STR);
+$stmt->bindValue(1, $get_origin);
+$stmt->bindValue(2, $get_destination);
 $stmt->execute();
 
 if ($stmt->rowCount() > 0) {

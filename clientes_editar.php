@@ -7,7 +7,9 @@ $id = $_GET['verid'];
 $query = "SELECT * FROM clientes WHERE id = '$id'";
 $result = $conectar->query($query)->fetchAll(PDO::FETCH_BOTH);
 foreach ($result as $row) {
+    $cedula = $row['cedula'];
     $Nombre = $row['nombre'];
+    $Apellido = $row['apellido'];
     $correo = $row['correo'];
     $telefono = $row['telefono'];
     $direccion = $row['direccion'];
@@ -78,6 +80,22 @@ foreach ($result as $row) {
                                             </div>
                                             <div class="col-sm-9 text-secondary">
                                                 <input id="Nombre_cliente_editar" name='Nombre_cliente_editar' type="text" class="form-control" value="<?php echo $Nombre ?>">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-sm-3">
+                                                <h6 class="mb-0">Apellido</h6>
+                                            </div>
+                                            <div class="col-sm-9 text-secondary">
+                                                <input id="Apellido_cliente_editar" name='Apellido_cliente_editar' type="text" class="form-control" value="<?php echo $Apellido ?>">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-sm-3">
+                                                <h6 class="mb-0">Cedula</h6>
+                                            </div>
+                                            <div class="col-sm-9 text-secondary">
+                                                <input id="Cedula_cliente_editar" name='Cedula_cliente_editar' type="text" class="form-control" value="<?php echo $cedula  ?>">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -164,17 +182,21 @@ foreach ($result as $row) {
             $('#action').val('update_cliente');
             var id = $('#id').val();
             var Nombre_cliente_editar = $('#Nombre_cliente_editar').val();
+            var Apellido_cliente_editar = $('#Apellido_cliente_editar').val();
+            var Cedula_cliente_editar = $('#Cedula_cliente_editar').val();
             var Correo_cliente_editar = $('#Correo_cliente_editar').val();
             var Telefono_cliente_editar = $('#Telefono_cliente_editar').val();
             var Direccion_cliente_editar = $('#Direccion_cliente_editar').val();
             var action = $('#action').val();
-            if (Nombre_cliente_editar != '' && Correo_cliente_editar != '' && Telefono_cliente_editar != '' && Direccion_cliente_editar != '') {
+            if (Nombre_cliente_editar != '' && Apellido_cliente_editar != '' && Cedula_cliente_editar != '' && Correo_cliente_editar != '' && Telefono_cliente_editar != '' && Direccion_cliente_editar != '') {
                 $.ajax({
                     url: "php/action.php",
                     type: "POST",
                     data: {
                         id: id,
                         Nombre_cliente_editar: Nombre_cliente_editar,
+                        Apellido_cliente_editar: Apellido_cliente_editar,
+                        Cedula_cliente_editar: Cedula_cliente_editar,
                         Correo_cliente_editar: Correo_cliente_editar,
                         Telefono_cliente_editar: Telefono_cliente_editar,
                         Direccion_cliente_editar: Direccion_cliente_editar,

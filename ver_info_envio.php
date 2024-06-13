@@ -265,6 +265,7 @@ foreach ($result as $row) {
                         console.log(data)
                         load_list(); // Reload list if necessary
                     } else {
+                        location.reload()
                         alert("Envio de paquetes finalizado");
                     }
                 }
